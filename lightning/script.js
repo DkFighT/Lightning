@@ -86,6 +86,7 @@ field.addEventListener('mousemove', e => {
     draw_legs(x, y);
 })
 field.addEventListener('touchmove', e => {
+    e.preventDefault()
     let x = e.clientX;
     let y = e.clientY;
     ball_position(x, y);
@@ -99,6 +100,7 @@ field.addEventListener('mouseup', e => {
     }
 })
 field.addEventListener('touchend', e => {
+    e.preventDefault()
     let x = e.clientX;
     let y = e.clientY;
     for (let k = 0; k < field_points.length; k++) {
