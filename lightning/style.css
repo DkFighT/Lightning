@@ -1,0 +1,55 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+:root{
+    --bg: #212529;
+    --fg: #f8f9fa;
+    --fg1: #b6dbff88;
+    --size: 30px;
+}
+body{
+    background-color: var(--bg);
+    color: var(--fg);
+}
+#field{
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    transition: all .2s linear;
+}
+canvas{
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+#ball{
+    width: var(--size);
+    height: var(--size);
+    background-color: var(--fg);
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 100;
+    box-shadow: 0px 0px 10px var(--fg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.point{
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: var(--fg1);
+    box-shadow: 0px 0px 5px var(--fg);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+    opacity: 0.1;
+    transition: all 1s cubic-bezier(0.23, 1, 0.320, 1);
+}
