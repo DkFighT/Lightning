@@ -85,8 +85,20 @@ field.addEventListener('mousemove', e => {
     ball_position(x, y);
     draw_legs(x, y);
 })
-
+field.addEventListener('touchmove', e => {
+    let x = e.clientX;
+    let y = e.clientY;
+    ball_position(x, y);
+    draw_legs(x, y);
+})
 field.addEventListener('mouseup', e => {
+    let x = e.clientX;
+    let y = e.clientY;
+    for (let k = 0; k < field_points.length; k++) {
+        document.getElementById(k).style.opacity = '1';
+    }
+})
+field.addEventListener('touchend', e => {
     let x = e.clientX;
     let y = e.clientY;
     for (let k = 0; k < field_points.length; k++) {
