@@ -21,16 +21,27 @@ let field_points = [];
 let count_of_legs = 20;
 let distance = 200;
 let ball_pos = [];
+let type;
 
 points.oninput = () => {
     points.nextSibling.textContent = points.value;
 }
 legs_count.oninput = () => {
     legs_count.nextSibling.textContent = legs_count.value;
+    count_of_legs = legs_count.value;
 }
 dist.oninput = () => {
     dist.nextSibling.textContent = dist.value;
+    distance = dist.value;
 }
+radios.forEach((el) => {
+    if (el.checked) {
+        type = el.value;
+    }
+    el.onchange = () => {
+        type = el.value;
+    }
+})
 
 function field_fill() {
     for (let i = 0; i < count_of_points; i++) {
@@ -78,11 +89,21 @@ function draw_legs(ball_x, ball_y) {
         context.moveTo(Math.floor(ball_x + 30 / 2), Math.floor(ball_y + 30 / 2));
         if (ball_pos[0].x + distance >= field_points[i].x && ball_pos[0].x - distance <= field_points[i].x && ball_pos[0].y + distance >= field_points[i].y && ball_pos[0].y - distance <= field_points[i].y) {
             if (ball_pos[0].legs < count_of_legs) {
-                field_points[i].used = 1;
                 ball_pos[0].legs += 1;
+                switch (type) {
+                    case '1':
+                        context.quadraticCurveTo(field_points[i].x + field_points[i].rand_x, field_points[i].y + field_points[i].rand_y, field_points[i].x + Math.round(field_points[i].size / 2), field_points[i].y + Math.round(field_points[i].size / 2));
+                        break;
+                    case '2':
+                        context.bezierCurveTo(field_points[i].x + field_points[i].rand_x, field_points[i].y + field_points[i].rand_y, ball_pos[0].x + field_points[i].rand_x, ball_pos[0].y + field_points[i].rand_y, field_points[i].x + Math.round(field_points[i].size / 2), field_points[i].y + Math.round(field_points[i].size / 2))
+                        break;
+                    case '3':
+                        context.bezierCurveTo(ball_pos[0].x + field_points[i].rand_x * -1, ball_pos[0].y + field_points[i].rand_y * -1, field_points[i].x + field_points[i].rand_x, field_points[i].y + field_points[i].rand_y, field_points[i].x + Math.round(field_points[i].size / 2), field_points[i].y + Math.round(field_points[i].size / 2))
+                        break;
+                }
                 // context.quadraticCurveTo(field_points[i].x + field_points[i].rand_x, field_points[i].y + field_points[i].rand_y, field_points[i].x + Math.round(field_points[i].size / 2), field_points[i].y + Math.round(field_points[i].size / 2));
                 // context.bezierCurveTo(field_points[i].x + field_points[i].rand_x, field_points[i].y + field_points[i].rand_y, ball_pos[0].x + field_points[i].rand_x, ball_pos[0].y + field_points[i].rand_y, field_points[i].x + Math.round(field_points[i].size / 2), field_points[i].y + Math.round(field_points[i].size / 2))
-                context.bezierCurveTo(ball_pos[0].x + field_points[i].rand_x * -1, ball_pos[0].y + field_points[i].rand_y * -1,  field_points[i].x + field_points[i].rand_x, field_points[i].y + field_points[i].rand_y, field_points[i].x + Math.round(field_points[i].size / 2), field_points[i].y + Math.round(field_points[i].size / 2))
+                // context.bezierCurveTo(ball_pos[0].x + field_points[i].rand_x * -1, ball_pos[0].y + field_points[i].rand_y * -1, field_points[i].x + field_points[i].rand_x, field_points[i].y + field_points[i].rand_y, field_points[i].x + Math.round(field_points[i].size / 2), field_points[i].y + Math.round(field_points[i].size / 2))
                 context.stroke();
                 document.getElementById(i).style.opacity = '1';
             }
