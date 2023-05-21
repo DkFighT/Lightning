@@ -25,6 +25,8 @@ let type;
 
 points.oninput = () => {
     points.nextSibling.textContent = points.value;
+    count_of_points = points.value;
+    reload_field();
 }
 legs_count.oninput = () => {
     legs_count.nextSibling.textContent = legs_count.value;
@@ -32,7 +34,7 @@ legs_count.oninput = () => {
 }
 dist.oninput = () => {
     dist.nextSibling.textContent = dist.value;
-    distance = dist.value;
+    // distance = dist.value;
 }
 radios.forEach((el) => {
     if (el.checked) {
@@ -42,6 +44,15 @@ radios.forEach((el) => {
         type = el.value;
     }
 })
+
+function reload_field(){
+    let all_points = document.querySelectorAll('.point');
+    for (let i = 0; i < all_points.length; i++){
+        all_points[i].remove();
+    }
+    field_points = [];
+    field_fill();
+}
 
 function field_fill() {
     for (let i = 0; i < count_of_points; i++) {
