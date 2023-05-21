@@ -10,12 +10,27 @@ context.shadowBlur = 5;
 context.shadowOffsetX = 0;
 context.shadowOffsetY = 0;
 
-let count_of_points = 400;
+let points = document.getElementById('points');
+let legs_count = document.getElementById('legs');
+let dist = document.getElementById('distance');
+let radios = document.querySelectorAll('.radio');
+
+let count_of_points = 300;
 let field_points = [];
 
-let count_of_legs = 15;
+let count_of_legs = 20;
 let distance = 200;
-let ball_pos = []
+let ball_pos = [];
+
+points.oninput = () => {
+    points.nextSibling.textContent = points.value;
+}
+legs_count.oninput = () => {
+    legs_count.nextSibling.textContent = legs_count.value;
+}
+dist.oninput = () => {
+    dist.nextSibling.textContent = dist.value;
+}
 
 function field_fill() {
     for (let i = 0; i < count_of_points; i++) {
@@ -34,8 +49,8 @@ function field_fill() {
             y: y_point,
             size: point_size,
             used: 0,
-            rand_x: get_random(-50, 50),
-            rand_y: get_random(-50, 50)
+            rand_x: get_random(-100, 100),
+            rand_y: get_random(-100, 100)
         }
         field_points.push(point_obj);
     }
@@ -58,7 +73,6 @@ function get_random(min, max) {
 
 function draw_legs(ball_x, ball_y) {
     context.beginPath();
-
     context.clearRect(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < field_points.length; i++) {
         context.moveTo(Math.floor(ball_x + 30 / 2), Math.floor(ball_y + 30 / 2));
@@ -67,7 +81,8 @@ function draw_legs(ball_x, ball_y) {
                 field_points[i].used = 1;
                 ball_pos[0].legs += 1;
                 // context.quadraticCurveTo(field_points[i].x + field_points[i].rand_x, field_points[i].y + field_points[i].rand_y, field_points[i].x + Math.round(field_points[i].size / 2), field_points[i].y + Math.round(field_points[i].size / 2));
-                context.bezierCurveTo(field_points[i].x + field_points[i].rand_x, field_points[i].y + field_points[i].rand_y, ball_pos[0].x + field_points[i].rand_x, ball_pos[0].y + field_points[i].rand_y, field_points[i].x + Math.round(field_points[i].size / 2), field_points[i].y + Math.round(field_points[i].size / 2))
+                // context.bezierCurveTo(field_points[i].x + field_points[i].rand_x, field_points[i].y + field_points[i].rand_y, ball_pos[0].x + field_points[i].rand_x, ball_pos[0].y + field_points[i].rand_y, field_points[i].x + Math.round(field_points[i].size / 2), field_points[i].y + Math.round(field_points[i].size / 2))
+                context.bezierCurveTo(ball_pos[0].x + field_points[i].rand_x * -1, ball_pos[0].y + field_points[i].rand_y * -1,  field_points[i].x + field_points[i].rand_x, field_points[i].y + field_points[i].rand_y, field_points[i].x + Math.round(field_points[i].size / 2), field_points[i].y + Math.round(field_points[i].size / 2))
                 context.stroke();
                 document.getElementById(i).style.opacity = '1';
             }
@@ -86,7 +101,7 @@ field.addEventListener('mousemove', e => {
     draw_legs(x, y);
 })
 field.addEventListener('touchmove', e => {
-//     e.preventDefault()
+    e.preventDefault()
     let x = e.clientX;
     let y = e.clientY;
     ball_position(x, y);
@@ -100,7 +115,7 @@ field.addEventListener('mouseup', e => {
     }
 })
 field.addEventListener('touchend', e => {
-//     e.preventDefault()
+    e.preventDefault()
     let x = e.clientX;
     let y = e.clientY;
     for (let k = 0; k < field_points.length; k++) {

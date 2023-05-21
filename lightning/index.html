@@ -10,6 +10,18 @@
 </head>
 <body>
     <div id="field">
+        <div class="menu">
+            <label class="label">Count of points</label>
+            <div class="label"><input type="range" id="points" min="50" max="500" value="300"><span>50</span></div>
+            <label class="label">Count of legs</label>
+            <div class="label"><input type="range" id="legs" min="5" max="50" value="20"><span>50</span></div>
+            <label class="label">Distance</label>
+            <div class="label"><input type="range" id="distance" min="50" max="300" value="200"><span>50</span></div>
+            <label class="label">Types of Lightning</label>
+            <div class="label"><input type="radio" name="radio" class="radio" checked>Type 1</div>
+            <div class="label"><input type="radio" name="radio" class="radio">Type 2</div>
+            <div class="label"><input type="radio" name="radio" class="radio">Type 3</div>
+        </div>
         <div id="ball"></div>
         <canvas width="1920" height="1080" id="canvas"></canvas>
     </div>
